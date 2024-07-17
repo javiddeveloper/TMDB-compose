@@ -3,6 +3,7 @@ package ir.javid.sattar.tmdbmovies.screens.home
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.javid.sattar.tmdbmovies.BuildConfig
 import ir.javid.sattar.tmdbmovies.graph.Roots
@@ -11,9 +12,9 @@ import ir.javid.sattar.tmdbmovies.graph.Roots
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-//    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    Text(text = BuildConfig.API_KEY)
+    Text(text = homeViewModel.s())
 //    val getAllImages = homeViewModel.getAllImages.collectAsLazyPagingItems()
 
 //    Scaffold(
