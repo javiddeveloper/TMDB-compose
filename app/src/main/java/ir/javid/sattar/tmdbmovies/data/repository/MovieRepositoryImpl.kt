@@ -7,10 +7,13 @@ import androidx.paging.PagingData
 import ir.javid.sattar.tmdbmovies.data.database.dao.MovieDao
 import ir.javid.sattar.tmdbmovies.data.database.dao.MovieRemoteKeysDao
 import ir.javid.sattar.tmdbmovies.data.database.paging.MovieRemoteMediator
-import ir.javid.sattar.tmdbmovies.data.model.MovieEntity
 import ir.javid.sattar.tmdbmovies.data.model.ResultEntity
 import ir.javid.sattar.tmdbmovies.data.remote.MoviesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 @ExperimentalPagingApi
 class MovieRepositoryImpl @Inject constructor(
@@ -30,4 +33,12 @@ class MovieRepositoryImpl @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
+    override fun getMovie(id: Int): Flow<ResultEntity> = callbackFlow {
+        val fetchMovie = async {
+            movieDao.getMovie(id)
+        }
+        trySend(fetchMovie.await())
+        awaitClose { cancel() }
+    }
+
 }
