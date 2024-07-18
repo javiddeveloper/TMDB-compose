@@ -37,6 +37,7 @@ import coil.request.ImageRequest
 import coil.util.DebugLogger
 import ir.javid.sattar.tmdbmovies.R
 import ir.javid.sattar.tmdbmovies.data.model.ResultEntity
+import ir.javid.sattar.tmdbmovies.graph.Roots
 import ir.javid.sattar.tmdbmovies.screens.HomeTopBar
 import ir.javid.sattar.tmdbmovies.util.imageURLW300
 import okhttp3.OkHttpClient
@@ -62,7 +63,7 @@ fun HomeScreen(
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
                 ListContent(moviesItems = moviesItems ){ itemClick ->
-//                    navController.navigate(Roots.DETAIL)
+                    navController.navigate("${Roots.Detail.route}/${itemClick.id}")
                 }
             }
         }
