@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id 'com.google.dagger.hilt.android'
     id 'com.google.devtools.ksp'
+    id 'androidx.room'
 }
 
 android {
@@ -49,6 +50,10 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    room {
+        schemaDirectory "$projectDir/schemas"
+    }
 }
 
 dependencies {
@@ -81,4 +86,15 @@ dependencies {
     // retrofit & gson
     implementation libs.retrofit
     implementation libs.converter.gson
+
+    // room
+    implementation libs.androidx.room.runtime
+    annotationProcessor libs.androidx.room.compiler
+    ksp libs.androidx.room.compiler
+    implementation libs.androidx.room.paging
+    implementation libs.androidx.room.ktx
+
+    //paging 3
+    implementation libs.androidx.paging.runtime
+    implementation libs.androidx.paging.paging.compose
 }

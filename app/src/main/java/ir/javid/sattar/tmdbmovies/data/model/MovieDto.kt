@@ -36,7 +36,7 @@ data class ResultDto(
     override fun toEntity() = ResultEntity(
         adult = adult,
         backdropPath = backdropPath,
-        genreIds = genreIds,
+        genreIds = genreIds.joinToString(","),
         id = id,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,

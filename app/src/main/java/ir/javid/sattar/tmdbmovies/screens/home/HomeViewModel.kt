@@ -9,7 +9,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) :ViewModel(){
-
-    fun s() = movieRepository.a()
+    val getAllMovie = movieRepository.getPagingMovies()
 
 }
