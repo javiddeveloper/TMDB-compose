@@ -4,8 +4,8 @@ A modern Android application showcasing the integration of Jetpack Compose with 
 
 <table>
   <tr>
-    <td><img src="1.jpg" alt="Home Screen" width="300"/></td>
-    <td><img src="2.jpg" alt="Detail Screen" width="300"/></td>
+    <td><img src="1.png" alt="Home Screen" width="300"/></td>
+    <td><img src="2.png" alt="Detail Screen" width="300"/></td>
   </tr>
 </table>
 

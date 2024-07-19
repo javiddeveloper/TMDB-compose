@@ -1,13 +1,14 @@
 package ir.javid.sattar.tmdbmovies.screens.home
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -34,6 +35,7 @@ fun HomeScreen(
     navController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
+    val state = rememberLazyListState()
     val moviesItems = homeViewModel.moviePagingFlow.collectAsLazyPagingItems()
     val context = LocalContext.current
     LaunchedEffect(key1 = moviesItems.loadState) {
@@ -65,7 +67,7 @@ fun HomeScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 } else {
-                    ListContent(moviesItems = moviesItems) { itemClick ->
+                    ListContent(moviesItems = moviesItems,state) { itemClick ->
                         navController.navigate("${Roots.Detail.route}/${itemClick.id}")
                     }
                 }
@@ -76,26 +78,61 @@ fun HomeScreen(
 
 @ExperimentalCoilApi
 @Composable
-fun ListContent(moviesItems: LazyPagingItems<ResultEntity>, itemClick: (ResultEntity) -> Unit) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(all = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+fun ListContent(
+    moviesItems: LazyPagingItems<ResultEntity>,
+    state: LazyListState,
+    itemClick: (ResultEntity) -> Unit
+) {
+    LazyColumn(
+        state =  state,
+        contentPadding = PaddingValues(vertical = 8.dp),
         modifier = Modifier.fillMaxSize()
     ) {
         items(
-            moviesItems.itemCount
-        ) {
-            val item = moviesItems[it]
+            count = moviesItems.itemCount,
+            key = { index -> moviesItems[index]?.id ?: index }
+        ) { index ->
+            val item = moviesItems[index]
             if (item != null) {
-                MovieItem(item = item, itemClick)
+                MovieItem(item = item, itemClick = itemClick)
             }
         }
 
         item {
-            if(moviesItems.loadState.append is LoadState.Loading) {
-                CircularProgressIndicator()
+            if (moviesItems.loadState.append is LoadState.Loading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
         }
     }
 }
+//@Composable
+//fun ListContent(moviesItems: LazyPagingItems<ResultEntity>, itemClick: (ResultEntity) -> Unit) {
+//    LazyVerticalGrid(
+//        columns = GridCells.Fixed(3),
+//        contentPadding = PaddingValues(all = 12.dp),
+//        verticalArrangement = Arrangement.spacedBy(12.dp),
+//        modifier = Modifier.fillMaxSize()
+//    ) {
+//        items(
+//            moviesItems.itemCount
+//        ) {
+//            val item = moviesItems[it]
+//            if (item != null) {
+//                MovieItem(item = item, itemClick)
+//            }
+//        }
+//
+//        item {
+//            if(moviesItems.loadState.append is LoadState.Loading) {
+//                CircularProgressIndicator()
+//            }
+//        }
+//    }
+//}
