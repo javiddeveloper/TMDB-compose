@@ -96,7 +96,7 @@ fun MovieDetailsContent(
                     .height(250.dp)
             ) {
                 AsyncImage(
-                    model = movie.backdropPath.imageURLW500(),
+                    model = movie.backdropPath?.imageURLW500(),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
