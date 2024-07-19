@@ -11,21 +11,21 @@ data class MovieEntity(
     val totalResults: Int
 ) : EntityModel
 
-@Entity(tableName = "result_entity")
+@Entity
 data class ResultEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id") val id: Int,
-    @ColumnInfo(name = "adult") val adult: Boolean,
-    @ColumnInfo(name = "backdropPath") val backdropPath: String,
-    @ColumnInfo(name = "genreIds") val genreIds: String,
-    @ColumnInfo(name = "originalLanguage") val originalLanguage: String,
-    @ColumnInfo(name = "originalTitle") val originalTitle: String,
-    @ColumnInfo(name = "overview") val overview: String,
-    @ColumnInfo(name = "popularity") val popularity: Double,
-    @ColumnInfo(name = "posterPath") val posterPath: String,
-    @ColumnInfo(name = "releaseDate") val releaseDate: String,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "video") val video: Boolean,
-    @ColumnInfo(name = "voteAverage") val voteAverage: Double,
-    @ColumnInfo(name = "voteCount") val voteCount: Int
+     val id: Int,
+     val adult: Boolean,
+     val backdropPath: String?,
+//     val genreIds: String,
+     val originalLanguage: String,
+     val originalTitle: String,
+     val overview: String,
+     val popularity: Double,
+     val posterPath: String,
+     val releaseDate: String,
+     val title: String,
+     val video: Boolean,
+     val voteAverage: Double,
+     val voteCount: Int,
 ) : EntityModel

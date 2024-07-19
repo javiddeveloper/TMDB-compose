@@ -8,8 +8,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.javid.sattar.tmdbmovies.data.database.MovieDatabase
-import ir.javid.sattar.tmdbmovies.data.database.dao.MovieDao
-import ir.javid.sattar.tmdbmovies.data.database.dao.MovieRemoteKeysDao
 import ir.javid.sattar.tmdbmovies.util.Constants.MOVIE_DATABASE
 import javax.inject.Singleton
 
@@ -28,16 +26,4 @@ object DatabaseModule {
             MOVIE_DATABASE
         ).build()
     }
-
-    @Singleton
-    @Provides
-    fun provideMovieDao(database: MovieDatabase): MovieDao {
-        return  database.movieDao()
-    }
-    @Singleton
-    @Provides
-    fun provideMovieRemoteKeysDao(database: MovieDatabase): MovieRemoteKeysDao {
-        return  database.movieRemoteKeysDao()
-    }
-
 }

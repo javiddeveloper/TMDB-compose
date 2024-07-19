@@ -11,7 +11,7 @@ data class MovieDto(
 ) : Dto {
     override fun toEntity() = MovieEntity(
         page = page,
-        results = results.map { it.toEntity() },
+        results = results.map { it.toEntity()},
         totalPages = totalPages,
         totalResults = totalResults,
     )
@@ -19,7 +19,7 @@ data class MovieDto(
 
 data class ResultDto(
     @SerializedName("adult") val adult: Boolean,
-    @SerializedName("backdrop_path") val backdropPath: String,
+    @SerializedName("backdrop_path") val backdropPath: String?,
     @SerializedName("genre_ids") val genreIds: List<Int>,
     @SerializedName("id") val id: Int,
     @SerializedName("original_language") val originalLanguage: String,
@@ -36,7 +36,7 @@ data class ResultDto(
     override fun toEntity() = ResultEntity(
         adult = adult,
         backdropPath = backdropPath,
-        genreIds = genreIds.joinToString(","),
+//        genreIds = genreIds.joinToString(","),
         id = id,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
