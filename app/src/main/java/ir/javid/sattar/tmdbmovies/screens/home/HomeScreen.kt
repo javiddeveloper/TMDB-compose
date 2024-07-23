@@ -68,7 +68,7 @@ fun HomeScreen(
                     )
                 } else {
                     ListContent(moviesItems = moviesItems,state) { itemClick ->
-                        navController.navigate("${Roots.Detail.route}/${itemClick.id}")
+                        navController.navigate("${Roots.Detail.route}/${itemClick.dbID}")
                     }
                 }
             }
@@ -90,7 +90,7 @@ fun ListContent(
     ) {
         items(
             count = moviesItems.itemCount,
-            key = { index -> moviesItems[index]?.id ?: index }
+            key = { index -> moviesItems[index]?.dbID ?: index }
         ) { index ->
             val item = moviesItems[index]
             if (item != null) {

@@ -34,10 +34,10 @@ data class ResultDto(
     @SerializedName("vote_count") val voteCount: Int
 ) : Dto {
     override fun toEntity() = ResultEntity(
+        dbID = 0,
+        id = id,
         adult = adult,
         backdropPath = backdropPath,
-//        genreIds = genreIds.joinToString(","),
-        id = id,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
         overview = overview,

@@ -12,7 +12,8 @@ data class MovieEntity(
 
 @Entity
 data class ResultEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+     val dbID: Int,
      val id: Int,
      val adult: Boolean,
      val backdropPath: String?,

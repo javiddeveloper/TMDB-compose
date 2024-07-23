@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class RemoteKeys(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val movieId: Int,
     val prevKey: Int?,
     val nextKey: Int?

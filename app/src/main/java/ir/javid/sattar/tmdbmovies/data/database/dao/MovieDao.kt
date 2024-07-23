@@ -2,8 +2,6 @@ package ir.javid.sattar.tmdbmovies.data.database.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import ir.javid.sattar.tmdbmovies.data.model.ResultEntity
@@ -15,7 +13,7 @@ interface MovieDao {
     @Query("SELECT * FROM resultentity")
     fun getAllMovies(): PagingSource<Int, ResultEntity>
 
-    @Query("SELECT * FROM resultentity where id = :id")
+    @Query("SELECT * FROM resultentity where dbID = :id")
     suspend fun getMovie(id: Int): ResultEntity
 
     @Upsert
