@@ -1,6 +1,5 @@
 package ir.javid.sattar.tmdbmovies.screens.home
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +12,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -27,7 +26,11 @@ import coil.annotation.ExperimentalCoilApi
 import ir.javid.sattar.tmdbmovies.data.model.ResultEntity
 import ir.javid.sattar.tmdbmovies.graph.Roots
 import ir.javid.sattar.tmdbmovies.screens.HomeTopBar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @ExperimentalMaterial3Api
 @ExperimentalCoilApi
 @Composable
@@ -37,23 +40,15 @@ fun HomeScreen(
 ) {
     val state = rememberLazyListState()
     val moviesItems = homeViewModel.moviePagingFlow.collectAsLazyPagingItems()
-    val context = LocalContext.current
-    LaunchedEffect(key1 = moviesItems.loadState) {
-        if (moviesItems.loadState.refresh is LoadState.Error) {
-            Toast.makeText(
-                context,
-                "Error: " + (moviesItems.loadState.refresh as LoadState.Error).error.message,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
+    val searchQuery by homeViewModel.searchQuery.collectAsState()
 
     Scaffold(
         topBar = {
             HomeTopBar(
-                "TMDB movies",
-                onSearchClicked = {
-//                    navController.navigate(Roots.OTHER)
+                title = "TMDB movies",
+                searchQuery = searchQuery,
+                onSearchQueryChanged = { query ->
+                    homeViewModel.updateSearchQuery(query)
                 }
             )
         },

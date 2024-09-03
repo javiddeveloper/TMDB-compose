@@ -16,6 +16,9 @@ interface MovieDao {
     @Query("SELECT * FROM resultentity where dbID = :id")
     suspend fun getMovie(id: Int): ResultEntity
 
+    @Query("SELECT * FROM resultentity WHERE title LIKE '%' || :query || '%'")
+    fun searchMovies(query: String): PagingSource<Int, ResultEntity>
+
     @Upsert
     suspend fun upsertMovies(movies: List<ResultEntity>)
 

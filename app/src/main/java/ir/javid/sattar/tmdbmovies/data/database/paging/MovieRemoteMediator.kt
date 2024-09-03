@@ -58,7 +58,6 @@ class MovieRemoteMediator(
             val prevPage = if (currentPage == 1) null else currentPage - 1
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
-//            Log.d("MovieRemoteMediator", "LoadType: $loadType Current Page: $currentPage Prev Page: $prevPage Next Page: $nextPage")
 
             movieDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
@@ -76,8 +75,6 @@ class MovieRemoteMediator(
                 movieRemoteKeysDao.upsertAll(keys)
                 movieImageDao.upsertMovies(movies)
 
-//                Log.d("MovieRemoteMediator", "Movies upserted: ${movies.size}")
-//                Log.d("MovieRemoteMediator", "RemoteKeys upserted: ${keys.size}")
             }
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (e: Exception) {
@@ -90,7 +87,6 @@ class MovieRemoteMediator(
     ): RemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.dbID?.let { id ->
-                Log.d("MovieRemoteMediator", "getRemoteKeyClosestToCurrentPosition: data -> ${id} remote key ${movieRemoteKeysDao.remoteKeysMovieId(movieId = id)}")
                 movieRemoteKeysDao.remoteKeysMovieId(movieId = id)
             }
         }
@@ -101,7 +97,6 @@ class MovieRemoteMediator(
     ): RemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { movie ->
-                Log.d("MovieRemoteMediator", "getRemoteKeyForFirstItem: data -> ${movie.dbID} remote key ${movieRemoteKeysDao.remoteKeysMovieId(movieId = movie.dbID)}")
                 movieRemoteKeysDao.remoteKeysMovieId(movieId = movie.dbID)
             }
     }
@@ -113,7 +108,6 @@ class MovieRemoteMediator(
             it.data.isNotEmpty()
         }?.data?.lastOrNull()
             ?.let { movie ->
-                Log.d("MovieRemoteMediator", "getRemoteKeyForLastItem: data -> ${movie.dbID} remote key ${movieRemoteKeysDao.remoteKeysMovieId(movieId = movie.dbID)}")
                 movieRemoteKeysDao.remoteKeysMovieId(movieId = movie.dbID)
             }
     }
